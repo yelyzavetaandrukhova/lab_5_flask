@@ -1,13 +1,12 @@
 # app/views.py
-
+from flask import Blueprint, jsonify, request, render_template
 from flask import render_template, jsonify, request, Blueprint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import NotFound
-from appmt.models import db, Customer, Transfer, Account
+from models import db_session, Customer, Transfer, Account
 
 # Create a Blueprint instance
 app_blueprint = Blueprint('app_blueprint', __name__)
-
 
 @app_blueprint.route('/index')
 def index():
@@ -47,14 +46,14 @@ def addaccount():
         if not customerName or not balance:
             return jsonify({'error': 'Invalid request. Please provide a customerName and balance.'}), 400
 
-        db.session.add(post1)
-        db.session.commit()
+        db_session.add(post1)
+        db_session.commit()
 
         return jsonify({'message': 'Item added to basket successfully'}), 201
     except NotFound as e:
         return jsonify({'error': str(e)}), 404
     except IntegrityError as e:
-        db.session.rollback()
+        db_session.rollback()
         return jsonify({'error': 'Invalid request. One or more accounts do not exist.'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -71,14 +70,14 @@ def addpost():
         if not currencyCode or not amount:
             return jsonify({'error': 'Invalid request. Please provide a currencyCode and amount.'}), 400
 
-        db.session.add(post)
-        db.session.commit()
+        db_session.add(post)
+        db_session.commit()
 
         return jsonify({'message': 'Item added to basket successfully'}), 201
     except NotFound as e:
         return jsonify({'error': str(e)}), 404
     except IntegrityError as e:
-        db.session.rollback()
+        db_session.rollback()
         return jsonify({'error': 'Invalid request. One or more accounts do not exist.'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
