@@ -1,4 +1,5 @@
-
+import unittest
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, jsonify, request, Blueprint
 from sqlalchemy import create_engine
@@ -10,7 +11,7 @@ from urls import bp, index, about, transfer, add, account, addaccount, addpost
 from app_blueprint.views import app_blueprint
 from models import db, Base, Customer, Transfer, Account
 app = Flask(__name__, template_folder='C:/Users/Acer/PycharmProjects/pythonProject/flask_money_transfer/appmt/templates', static_folder='static')
-
+CORS(app)
 app.config.from_object(Config)  # Assuming Config is imported from settings
 
 # Access the database URI
@@ -29,6 +30,8 @@ Base.query = db_session.query_property()
 
 app.register_blueprint(app_blueprint, template_folder='C:/Users/Acer/PycharmProjects/pythonProject/flask_money_transfer/appmt/templates')
 db.init_app(app)
+
+
 
 if __name__ == '__main__':
     Base.metadata.create_all(bind=engine)
