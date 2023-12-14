@@ -4,7 +4,7 @@ info:
   description: API for managing customer accounts and transfers
   version: "1.0"
 server:
-  - url: http://localhost:5000/index/
+  - url: http://localhost:5000/
 paths:
   /index:
     get:
