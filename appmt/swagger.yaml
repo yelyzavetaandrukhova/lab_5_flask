@@ -1,0 +1,148 @@
+openapi: "3.0.0"
+info:
+  title: Money Transfer API
+  description: API for managing customer accounts and transfers
+  version: "1.0"
+server:
+  - url: http://localhost:5000/index/
+paths:
+  /index:
+    get:
+      summary: Get all transfers and customers
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/x-www-form-urlencoded:
+              example:
+                posts:
+                  - id: 1
+                    currencyCode: USD
+                    amount: 100
+                    fromAccountId: 1
+                    toAccountId: 2
+                posts2:
+                  - id: 1
+                    customerName: John Doe
+                    emailAddress: john@example.com
+
+  /about:
+    get:
+      summary: Get information about the application
+      responses:
+        200:
+          description: Successful response
+          content:
+            text/html:
+              example: About Money Transfer App
+
+  /post/{post_id}:
+    get:
+      summary: Get details of a specific transfer and customer
+      parameters:
+        - name: post_id
+          in: path
+          required: true
+          description: ID of the transfer
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/x-www-form-urlencoded:
+              example:
+                post:
+                  id: 1
+                  currencyCode: USD
+                  amount: 100
+                  fromAccountId: 1
+                  toAccountId: 2
+                post2:
+                  id: 1
+                  customerName: John Doe
+                  emailAddress: john@example.com
+        404:
+          description: Transfer not found
+
+  /add:
+    get:
+      summary: Get the form for adding a transfer
+      responses:
+        200:
+          description: Successful response
+          content:
+            text/html:
+              example: HTML form for adding a transfer
+
+  /account:
+    get:
+      summary: Get the form for registering an account
+      responses:
+        200:
+          description: Successful response
+          content:
+            text/html:
+              example: HTML form for registering an account
+
+  /addaccount:
+    post:
+      summary: Add a new account
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                customerName:
+                  type: string
+                balance:
+                  type: integer
+                currencyCode:
+                  type: string
+              required:
+                - customerName
+                - balance
+      responses:
+        201:
+          description: Account added successfully
+        400:
+          description: Invalid request. Please provide customerName and balance.
+        404:
+          description: One or more accounts do not exist
+        500:
+          description: Internal server error
+
+  /addpost:
+    post:
+      summary: Add a new transfer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                currencyCode:
+                  type: string
+                amount:
+                  type: integer
+                fromAccountId:
+                  type: integer
+                toAccountId:
+                  type: integer
+              required:
+                - currencyCode
+                - amount
+                - fromAccountId
+                - toAccountId
+      responses:
+        201:
+          description: Transfer added successfully
+        400:
+          description: Invalid request. Please provide currencyCode and amount.
+        404:
+          description: One or more accounts do not exist
+        500:
+          description: Internal server error
