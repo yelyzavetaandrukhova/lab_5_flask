@@ -42,10 +42,10 @@
               <a class="nav-link" href="{{ url_for('app_blueprint.about') }}">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('app_blueprint.add') }}">Add</a>
+              <a class="nav-link" href="{{ url_for('auth.add') }}">Add</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('app_blueprint.account') }}">Account</a>
+              <a class="nav-link" href="{{ url_for('auth.account') }}">Account</a>
             </li>
           </ul>
         </div>
@@ -71,10 +71,10 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <form name="addForm" id="addForm" method="POST" action="{{ url_for('app_blueprint.addaccount') }}" novalidate>
-            <div class="control-group">
+             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
-                <label>Id</label>
-                <input type="number" class="form-control" placeholder="id" name="id" id="id" required data-validation-required-message="Please enter a currencyCode.">
+                <label>id</label>
+                <input type="text" class="form-control" placeholder="customerName" name="idAccount" id="idAccount" required data-validation-required-message="Please enter amount.">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
@@ -95,7 +95,7 @@
             <div class="control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
                 <label>Balance</label>
-                <input type="text" class="form-control" placeholder="currencyCode" name="currencyCode" id="currencyCode" required data-validation-required-message="Please enter fromAccountId.">
+                <input type="text" class="form-control" placeholder="currencyCode" name="password" id="password" required data-validation-required-message="Please enter fromAccountId.">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
@@ -108,7 +108,27 @@
         </div>
       </div>
     </div>
+ <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <h1><b><span class="subheading">Accounts</span></b></h1>
+        {% for account in accounts %}
+          <div class="post-preview">
 
+              <h2 class="post-title">
+                {{ account.customerName }}
+              </h2>
+              <h3 class="post-subtitle">
+                {{ account.balance }}
+              </h3>
+              <p class="post-meta">Code : {{ account.password}} </p>
+            </a>
+          </div>
+          {% endfor %}
+          <hr>
+        </div>
+      </div>
+    </div>
     <hr>
 
     <!-- Footer -->

@@ -2,6 +2,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, declarative_base
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 Base = declarative_base()
 db = SQLAlchemy()
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -12,17 +13,18 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 # Bind the engine to the metadata
 
 
-class Customer(Base):
+class Customer(UserMixin, Base):
     __tablename__ = 'Customer'
     id = Column(Integer, primary_key=True)
     customerName = Column(String(255), nullable=False)
     emailAddress = Column(String(255), nullable=False)
+    password = Column(String(255), nullable=False)
 
 
 class Account(Base):
     __tablename__ = 'Account'
-    id = Column(Integer, primary_key=True)
-    customerName = Column(String(255), nullable=False)
+    idAccount = Column(Integer, primary_key=True)
+    customerName = Column(String(255), nullable=False,  primary_key=True)
     balance = Column(Integer, nullable=False)
     currencyCode = Column(String(10), nullable=False)
 
@@ -32,8 +34,8 @@ class Transfer(Base):
     id = Column(Integer, primary_key=True)
     currencyCode = Column(String(10), nullable=False)
     amount = Column(Integer, nullable=False)
-    fromAccountId = Column(Integer, ForeignKey('Account.id'))
-    toAccountId = Column(Integer, ForeignKey('Account.id'))
+    fromAccountId = Column(Integer, ForeignKey('Account.idAccount'))
+    toAccountId = Column(Integer, ForeignKey('Account.idAccount'))
     from_account = relationship('Account', foreign_keys=[fromAccountId])
     to_account = relationship('Account', foreign_keys=[toAccountId])
 engine = db.create_engine('mysql+pymysql://root:lasisa23$U@127.0.0.1:3306/money_transf')

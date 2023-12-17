@@ -1,9 +1,12 @@
 # app/views.py
+# app/views.py
+
 from flask import Blueprint, jsonify, request, render_template
 from flask import render_template, jsonify, request, Blueprint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import NotFound
 from models import db_session, Customer, Transfer, Account
+from flask_login import login_required, current_user
 
 # Create a Blueprint instance
 app_blueprint = Blueprint('app_blueprint', __name__)
@@ -26,14 +29,6 @@ def transfer(post_id):
         return render_template('post.html', post=post, post2=post2)
     except NotFound as e:
         return jsonify({'error': str(e)}), 404
-
-@app_blueprint.route('/add')
-def add():
-    return render_template('add.html')
-
-@app_blueprint.route('/account')
-def account():
-    return render_template('register.html')
 
 @app_blueprint.route('/addaccount', methods=['POST'])
 def addaccount():

@@ -3,7 +3,7 @@ info:
   title: Money Transfer API
   description: API for managing customer accounts and transfers
   version: "1.0"
-server:
+servers:
   - url: http://localhost:5000/
 paths:
   /index:
@@ -93,17 +93,7 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              properties:
-                customerName:
-                  type: string
-                balance:
-                  type: integer
-                currencyCode:
-                  type: string
-              required:
-                - customerName
-                - balance
+              $ref: '#/components/schemas/Account'
       responses:
         201:
           description: Account added successfully
@@ -122,21 +112,7 @@ paths:
         content:
           application/x-www-form-urlencoded:
             schema:
-              type: object
-              properties:
-                currencyCode:
-                  type: string
-                amount:
-                  type: integer
-                fromAccountId:
-                  type: integer
-                toAccountId:
-                  type: integer
-              required:
-                - currencyCode
-                - amount
-                - fromAccountId
-                - toAccountId
+              $ref: '#/components/schemas/Transfer'
       responses:
         201:
           description: Transfer added successfully
@@ -146,3 +122,146 @@ paths:
           description: One or more accounts do not exist
         500:
           description: Internal server error
+
+  /updatepost/{post_id}:
+    put:
+      summary: Update details of a specific transfer
+      parameters:
+        - name: post_id
+          in: path
+          required: true
+          description: ID of the transfer
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Transfer'
+      responses:
+        200:
+          description: Transfer updated successfully
+          content:
+            application/x-www-form-urlencoded:
+              example:
+                post:
+                  id: 1
+                  currencyCode: USD
+                  amount: 100
+                  fromAccountId: 1
+                  toAccountId: 2
+                post2:
+                  id: 2
+                  customerName: John Doe
+                  emailAddress: john@example.com
+        400:
+          description: Invalid request. Please provide valid data for update.
+        404:
+          description: Transfer not found
+        500:
+          description: Internal server error
+
+  /deletepost/{post_id}:
+    delete:
+      summary: Delete a specific transfer
+      parameters:
+        - name: post_id
+          in: path
+          required: true
+          description: ID of the transfer
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Transfer deleted successfully
+          content:
+            application/x-www-form-urlencoded:
+              example:
+                post:
+                  id: 1
+                  currencyCode: USD
+                  amount: 100
+                  fromAccountId: 1
+                  toAccountId: 2
+                post2:
+                  id: 2
+                  customerName: John Doe
+                  emailAddress: john@example.com
+        404:
+          description: Transfer not found
+        500:
+          description: Internal server error
+
+
+
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        customerName:
+          type: string
+        emailAddress:
+          type: string
+      example:
+        id: 1
+        customerName: John Doe
+        emailAddress: john@example.com
+
+    Account:
+      type: object
+      properties:
+        id:
+          type: integer
+        customerName:
+          type: string
+        balance:
+          type: integer
+        currencyCode:
+          type: string
+      example:
+        id: 1
+        customerName: John Doe
+        balance: 1000
+        currencyCode: USD
+
+    Transfer:
+      type: object
+      properties:
+        id:
+          type: integer
+        currencyCode:
+          type: string
+        amount:
+          type: integer
+        fromAccountId:
+          type: integer
+        toAccountId:
+          type: integer
+      example:
+        id: 1
+        currencyCode: USD
+        amount: 100
+        fromAccountId: 1
+        toAccountId: 2
+
+    UpdateTransfer:
+      type: object
+      properties:
+        currencyCode:
+          type: string
+        amount:
+          type: integer
+        fromAccountId:
+          type: integer
+        toAccountId:
+          type: integer
+      example:
+        id: 1
+        currencyCode: USD
+        amount: 100
+        fromAccountId: 1
+        toAccountId: 2

@@ -42,10 +42,16 @@
               <a class="nav-link" href="{{ url_for('app_blueprint.about') }}">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('app_blueprint.add') }}">Add</a>
+              <a class="nav-link" href="{{ url_for('auth.add') }}">Add</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('app_blueprint.account') }}">Account</a>
+              <a class="nav-link" href="{{ url_for('auth.account') }}">Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.signup') }}">SignUp</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
             </li>
           </ul>
         </div>

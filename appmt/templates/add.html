@@ -42,10 +42,10 @@
               <a class="nav-link" href="{{ url_for('app_blueprint.about') }}">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('app_blueprint.add') }}">Add</a>
+              <a class="nav-link" href="{{ url_for('auth.add') }}">Add</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('app_blueprint.account') }}">Account</a>
+              <a class="nav-link" href="{{ url_for('auth.account') }}">Account</a>
             </li>
           </ul>
         </div>
@@ -110,7 +110,23 @@
     </div>
 
     <hr>
+     <div class="col-lg-8 col-md-10 mx-auto">
+          <h1><b><span class="subheading">Transactions</span></b></h1>
+        {% for transfer in transfers %}
+          <div class="post-preview">
 
+              <h2 class="post-title">
+                {{ transfer.amount }}
+              </h2>
+              <h3 class="post-subtitle">
+                {{ transfer.toAccountId }}
+              </h3>
+            </a>
+            <p class="post-meta">Send by {{ transfer.fromAccountId }} </p>
+          </div>
+          {% endfor %}
+          <hr>
+        </div>
     <!-- Footer -->
     <footer>
       <div class="container">
