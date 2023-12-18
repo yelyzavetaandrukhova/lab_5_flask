@@ -76,6 +76,7 @@ def signup_post():
 
     return redirect(url_for('auth.add'))
 
+
 @auth.route('/logout')
 @login_required
 def logout():

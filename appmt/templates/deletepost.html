@@ -52,78 +52,32 @@
       </div>
     </nav>
 
-    <!-- Page Header -->
-    <header class="masthead" style="background-image: url('{{ url_for('static', filename='contact-bg.jpg') }}')">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
-            <div class="page-heading">
-              <h1>Add Account</h1>
-              <span class="subheading">You can create an account here.</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Main Content -->
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <form name="addForm" id="addForm" method="POST" action="{{ url_for('app_blueprint.addaccount') }}" novalidate>
-
-            <div class="control-group">
+<!-- Page Header -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <form name="deleteForm" id="deleteForm" method="DELETE" action="{{ url_for('app_blueprint.deletepost', post_id=post.id) }}" novalidate>
+        <input type="hidden" name="post_id" value="{{ post.id }}">
+       <div class="control-group">
               <div class="form-group floating-label-form-group controls">
-                <label>Customer Name</label>
-                <input type="text" class="form-control" placeholder="customerName" name="customerName" id="customerName" required data-validation-required-message="Please enter amount.">
+                <label>Id</label>
+                <br>
+                <br>
+                <input type="number" class="form-control" placeholder="id" name="id" id="id" required data-validation-required-message="Please enter an id.">
                 <p class="help-block text-danger"></p>
               </div>
             </div>
-            <div class="control-group">
-              <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>Balance</label>
-                <input type="number" class="form-control" placeholder="balance" name="balance" id="balance" required data-validation-required-message="Please enter fromAccountId.">
-                <p class="help-block text-danger"></p>
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="form-group col-xs-12 floating-label-form-group controls">
-                <label>Balance</label>
-                <input type="text" class="form-control" placeholder="currencyCode" name="currencyCode" id="currencyCode" required data-validation-required-message="Please enter fromAccountId.">
-                <p class="help-block text-danger"></p>
-              </div>
-            </div>
-            <br>
-            <div id="success"></div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-secondary" id="sendMessageButton">Send</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
- <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <h1><b><span class="subheading">Accounts</span></b></h1>
-        {% for account in accounts %}
-          <div class="post-preview">
+        <br>
+        <div id="success"></div>
+        <form name="deleteForm" id="post_id" method="DELETE" action="{{ url_for('app_blueprint.deletepost', post_id=post.id) }}" novalidate>
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
 
-              <h2 class="post-title">
-                {{ account.customerName }}
-              </h2>
-              <h3 class="post-subtitle">
-                {{ account.balance }}
-              </h3>
-              <p class="post-meta">Code : {{ account.password}} </p>
-            </a>
-          </div>
-          {% endfor %}
-          <hr>
-        </div>
-      </div>
+      </form>
     </div>
-    <hr>
+  </div>
+</div>
 
     <!-- Footer -->
     <footer>

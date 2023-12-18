@@ -12,7 +12,7 @@ from urls import bp, index, about, transfer, addaccount, addpost
 from app_blueprint.views import app_blueprint
 from flasgger.utils import load_from_file
 from flask_login import LoginManager
-from models import db, Base, Customer, Transfer, Account
+from models import db, db_session, Base, Customer, Transfer, Account
 from auth import auth as auth_blueprint
 app = Flask(__name__, template_folder='C:/Users/Acer/PycharmProjects/pythonProject/flask_money_transfer/appmt/templates', static_folder='static')
 CORS(app)
@@ -33,16 +33,16 @@ def load_user(user_id):
     return Customer.query.get(user_id)
 # Bind the engine to the Base
 Base.metadata.bind = engine
-
+db.init_app(app)
 # Create a scoped session to handle database connections
-db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
+
 
 # Access the Base for creating tables
 Base.query = db_session.query_property()
 
 app.register_blueprint(app_blueprint, template_folder='C:/Users/Acer/PycharmProjects/pythonProject/flask_money_transfer/appmt/templates')
 app.register_blueprint(auth_blueprint)
-db.init_app(app)
+
 spec = load_from_file('C:/Users/Acer/PycharmProjects/pythonProject/flask_money_transfer/appmt/swagger.yaml')
 swagger = Swagger(app, template=spec)
 
